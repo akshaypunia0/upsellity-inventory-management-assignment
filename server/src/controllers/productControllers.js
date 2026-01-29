@@ -33,8 +33,7 @@ const getAllProducts = async (req, res) => {
         const {
             search = '',
             status,
-            sortBy = 'createdAt',
-            order = 'desc'
+            price = 'desc',
         } = req.query;
 
         let products = await prisma.product.findMany({
@@ -45,12 +44,15 @@ const getAllProducts = async (req, res) => {
                 ]
             },
             orderBy: {
-                [sortBy]: order
+                price: price
             }
         });
 
         if (status) {
             products = products.filter(product => {
+                if (status === 'ALL') {
+                    return true;
+                }
                 if (status === 'OUT_OF_STOCK') {
                     return product.stock === 0;
                 }

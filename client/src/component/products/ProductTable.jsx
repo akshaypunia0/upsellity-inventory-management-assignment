@@ -14,8 +14,6 @@ import { Button } from "@/components/ui/button"
 
 const ProductTable = ({ products, onDelete }) => {
 
-    console.log('Data is: ', products);
-
     return (
         <Table className="rounded-xl overflow-hidden border bg-background shadow-sm">
             <TableCaption className="py-4 text-sm text-muted-foreground">

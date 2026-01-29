@@ -9,9 +9,19 @@ const api = axios.create({
   },
 });
 
-const getAllProducts = async () => {
+const getAllProducts = async ({
+  search = "",
+  status = "ALL",
+  price = "desc",
+} = {}) => {
     try {
-        const response = await api.get('/');
+        const response = await api.get('/', {
+            params: {
+                search,
+                status,
+                price
+            }
+        });
         return response.data;
         
     } catch (error) {

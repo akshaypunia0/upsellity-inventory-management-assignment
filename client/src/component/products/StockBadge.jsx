@@ -12,7 +12,7 @@ const StockBadge = (stock, minStock) => {
 
     if (stock > 0 && stock <= minStock) {
         return (
-            <Badge className="bg-blue-50 text-blue-700 dark:bg-blue-950 dark:text-blue-300">
+            <Badge className="bg-yellow-100 text-yellow-500 dark:bg-yellow-700 dark:text-yellow-300">
                 Low stock
             </Badge>
         )
