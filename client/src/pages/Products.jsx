@@ -61,10 +61,12 @@ const Products = () => {
   return (
     <>
       <div className='flex flex-col max-w-7xl mx-auto'>
-        <div className='flex justify-start items-center my-6 gap-4'>
+        <div className='flex justify-start items-center my-4'>
           <SearchBar search={search} setSearch={setSearch} onSearch={onSearch} />
-          <DropdownFilter status={statusFilter} menu={status} onSelect={setStatusFilter} />
-          <DropdownFilter status={priceFilter} menu={price} onSelect={setPriceFilter} />
+          <div className="flex justify-start items-center my-4 gap-12">
+            <DropdownFilter status={statusFilter} menu={status} onSelect={setStatusFilter} label="Status" />
+            <DropdownFilter status={priceFilter} menu={price} onSelect={setPriceFilter} label="Price" />
+          </div>
         </div>
         <ProductTable products={allProducts} onDelete={handleDeleteClick} />
         <ConfirmDialog open={open} onClose={() => setOpen(false)} onConfirm={handleConfirmDelete} />
