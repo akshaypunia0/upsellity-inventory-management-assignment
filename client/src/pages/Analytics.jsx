@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { analytics } from '@/api/analyticsApi';
 import Loader from '@/component/common/Loader';
-import SummaryCard from '@/component/analytics/summaryCard';
+import SummaryCard from '@/component/analytics/SummaryCard';
 import ProductStockTable from '@/component/analytics/ProductStockTable';
 
 const Analytics = () => {
