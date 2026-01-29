@@ -43,7 +43,7 @@ const Navbar = () => {
                     </div>
                 </div>
             </nav>
-            <ProductForm open={open} setOpen={setOpen} />
+            <ProductForm open={open} setOpen={setOpen} mode='add' initialData='' />
         </>
 
     );

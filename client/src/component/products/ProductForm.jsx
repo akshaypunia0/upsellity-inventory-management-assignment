@@ -2,17 +2,23 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/u
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { useState } from "react"
-import { addProduct } from "@/api/productApi"
+import { useEffect, useState } from "react"
+import { addProduct, updateProduct } from "@/api/productApi"
 
-const ProductForm = ({ open, setOpen }) => {
+const ProductForm = ({ open, setOpen, mode, initialData }) => {
     const [formData, setFormData] = useState({
         name: "",
         sku: "",
-        price: "",
-        stock: "",
-        minStock: ""
+        price: Number(""),
+        stock: Number(""),
+        minStock: Number("")
     })
+
+    useEffect(() => {
+        if (mode === 'update') {
+            setFormData(initialData)
+        }
+    }, [mode])
 
     const handleChange = (e) => {
         setFormData({
@@ -20,6 +26,7 @@ const ProductForm = ({ open, setOpen }) => {
             [e.target.name]: e.target.value
         })
     }
+
 
     const handleSubmit = async (e) => {
         e.preventDefault()
@@ -37,20 +44,42 @@ const ProductForm = ({ open, setOpen }) => {
         setFormData({
             name: "",
             sku: "",
-            price: "",
-            stock: "",
-            minStock: ""
+            price: Number(""),
+            stock: Number(""),
+            minStock: Number("")
         })
     }
+
+
+
+    const handleUpdate = async (e) => {
+        e.preventDefault()
+
+        if (!formData.name || !formData.price) {
+            alert("Name and Price are required")
+            return
+        }
+
+        setOpen(false)
+
+        console.log('updated data: ', formData);
+
+
+        await updateProduct(initialData.id, formData)
+        window.location.reload()
+    }
+
+
+
 
     return (
         <Dialog open={open} onOpenChange={setOpen}>
             <DialogContent>
                 <DialogHeader>
-                    <DialogTitle>Add New Product</DialogTitle>
+                    <DialogTitle>{mode === 'add' ? 'Add New Product' : 'Update Product'}</DialogTitle>
                 </DialogHeader>
 
-                <form onSubmit={handleSubmit} className="space-y-4 mt-4">
+                <form onSubmit={mode === 'add' ? handleSubmit : handleUpdate} className="space-y-4 mt-4">
                     <div className="flex flex-col gap-2">
                         <Label>Product Title</Label>
                         <Input
@@ -114,7 +143,7 @@ const ProductForm = ({ open, setOpen }) => {
                         </Button>
 
                         <Button type="submit">
-                            Add Product
+                            {mode === 'add' ? 'Add Product' : 'Update Product'}
                         </Button>
                     </div>
                 </form>

@@ -5,6 +5,7 @@ import { deleteProduct } from '@/api/productApi'
 import ConfirmDialog from '@/component/common/ConfirmDialog'
 import Loader from '@/component/common/Loader'
 
+
 const Products = () => {
 
   const [allProducts, setAllProducts] = useState([])
