@@ -16,6 +16,10 @@ A comprehensive web-based inventory management system built with React, Express.
 - **Responsive UI**: Modern, mobile-friendly interface built with React and Tailwind CSS
 - **RESTful API**: Complete REST API for all inventory operations
 
+### Extra Feature
+- Export complete inventory as CSV (name, SKU, price, stock, status)
+
+
 ## 📋 Prerequisites
 
 Before you begin, ensure you have the following installed:

@@ -13,7 +13,7 @@ const Navbar = () => {
                 <div className="max-w-6xl mx-auto px-6 h-14 flex items-center justify-between">
                     <h1 className="text-lg font-bold">Inventory Dashboard</h1>
 
-                    <div className="flex gap-6">
+                    <div className="flex gap-6 items-center">
                         <NavLink
                             to="/"
                             className={({ isActive }) =>
@@ -42,8 +42,9 @@ const Navbar = () => {
 
                     </div>
                 </div>
+                <ProductForm open={open} setOpen={setOpen} mode='add' initialData='' />
             </nav>
-            <ProductForm open={open} setOpen={setOpen} mode='add' initialData='' />
+
         </>
 
     );

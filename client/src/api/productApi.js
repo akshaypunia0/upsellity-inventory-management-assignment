@@ -30,6 +30,16 @@ const getAllProducts = async ({
     }
 }
 
+const exportInventoryCSV = async () => {
+    try {
+        const response = await api.get('/export', { responseType: "blob" });
+        return response.data;
+    } catch (error) {
+        console.error('Error exporting inventory CSV:', error);
+        throw error;
+    }
+}
+
 const getProductById = async (id) => {
     try {
         const response = await api.get(`/${id}`);
@@ -71,10 +81,16 @@ const deleteProduct = async (id) => {
     }
 }
 
+
+
+
+
+
 export {
     getAllProducts,
     getProductById,
     addProduct,
     updateProduct,
-    deleteProduct
+    deleteProduct,
+    exportInventoryCSV
 }

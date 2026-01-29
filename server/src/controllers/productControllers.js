@@ -1,3 +1,4 @@
+import { Parser } from 'json2csv';
 import { prisma } from "../config/db.js";
 
 
@@ -19,7 +20,7 @@ const addProduct = async (req, res) => {
                 minStock: Number(minStock)
             }
         });
-        return res.status(201).json({message: 'Product added successfully', product});
+        return res.status(201).json({ message: 'Product added successfully', product });
 
     } catch (error) {
         return res.status(500).json({ message: 'Internal Server Error while adding product' });
@@ -91,7 +92,7 @@ const getProductById = async (req, res) => {
         }
 
 
-        return res.status(200).json({message: 'Product fetched successfully', product});
+        return res.status(200).json({ message: 'Product fetched successfully', product });
 
 
     } catch (error) {
@@ -104,7 +105,7 @@ const updateProduct = async (req, res) => {
     try {
 
         const { id } = req.params;
-        
+
         const { name, sku, price, stock, minStock } = req.body;
 
         if (name === '' || sku === '' || (price == null || undefined) || (stock == null || undefined) || (minStock == null || undefined)) {
@@ -122,7 +123,7 @@ const updateProduct = async (req, res) => {
             }
         });
 
-        return res.status(200).json({message: 'Product updated successfully', product});
+        return res.status(200).json({ message: 'Product updated successfully', product });
 
     } catch (error) {
         return res.status(500).json({ message: 'Internal Server Error while updating product', error });
@@ -143,6 +144,54 @@ const deleteProduct = async (req, res) => {
 }
 
 
+const exportInventoryCSV = async (req, res) => {
+    console.log('export csv running 1');
+    try {
+
+        const products = await prisma.product.findMany();
+
+        const csvData = products.map(product => {
+            let status = 'IN_STOCK';
+            if (product.stock === 0) {
+                status = 'OUT_OF_STOCK';
+            } else if (product.stock <= product.minStock) {
+                status = 'LOW_STOCK';
+            }
+
+            return {
+                name: product.name,
+                sku: product.sku,
+                price: product.price,
+                stock: product.stock,
+                status
+            }
+        })
+
+        console.log('export csv running 2');
+
+        const parser = new Parser({
+            fields: ['name', 'sku', 'price', 'stock', 'status']
+        });
+
+        const csv = parser.parse(csvData);
+
+        res.header('Content-Type', 'text/csv');
+
+        const filename = `inventory_${Math.floor(Math.random() * 1000)}.csv`;
+
+        res.header("Content-Disposition", `attachment; filename=${filename}`);
+
+        console.log('export csv running 3');
+
+        return res.status(200).send(csv);
+
+
+    } catch (error) {
+        return res.status(500).json({ message: 'Internal Server Error while exporting inventory CSV', error: error.message });
+    }
+}
+
+
 
 
 
@@ -152,4 +201,5 @@ export {
     deleteProduct,
     getProductById,
     updateProduct,
+    exportInventoryCSV
 };
