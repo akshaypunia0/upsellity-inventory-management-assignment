@@ -116,16 +116,16 @@ const updateProduct = async (req, res) => {
             data: {
                 name,
                 sku,
-                price,
-                stock,
-                minStock
+                price: Number(price),
+                stock: Number(stock),
+                minStock: Number(minStock)
             }
         });
 
         return res.status(200).json({message: 'Product updated successfully', product});
 
     } catch (error) {
-        return res.status(500).json({ message: 'Internal Server Error while updating product' });
+        return res.status(500).json({ message: 'Internal Server Error while updating product', error });
     }
 }
 

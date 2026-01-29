@@ -31,8 +31,8 @@ const ProductForm = ({ open, setOpen, mode, initialData }) => {
     const handleSubmit = async (e) => {
         e.preventDefault()
 
-        if (!formData.name || !formData.price) {
-            alert("Name and Price are required")
+        if (!formData.name || !formData.price || !formData.sku) {
+            alert("Title, sku and Price are menditory")
             return
         }
 
@@ -55,10 +55,11 @@ const ProductForm = ({ open, setOpen, mode, initialData }) => {
     const handleUpdate = async (e) => {
         e.preventDefault()
 
-        if (!formData.name || !formData.price) {
-            alert("Name and Price are required")
+        if (!formData.name || !formData.price || !formData.sku) {
+            alert("Title, sku and Price are menditory")
             return
         }
+        
 
         setOpen(false)
 
@@ -84,6 +85,7 @@ const ProductForm = ({ open, setOpen, mode, initialData }) => {
                         <Label>Product Title</Label>
                         <Input
                             name="name"
+                            required
                             placeholder="Enter product name"
                             value={formData.name}
                             onChange={handleChange}
@@ -94,6 +96,7 @@ const ProductForm = ({ open, setOpen, mode, initialData }) => {
                         <Label>SKU</Label>
                         <Input
                             name="sku"
+                            required
                             placeholder="Enter SKU"
                             value={formData.sku}
                             onChange={handleChange}
@@ -104,6 +107,7 @@ const ProductForm = ({ open, setOpen, mode, initialData }) => {
                         <Label>Price</Label>
                         <Input
                             type="number"
+                            required
                             name="price"
                             placeholder="Enter price"
                             value={formData.price}
@@ -115,6 +119,7 @@ const ProductForm = ({ open, setOpen, mode, initialData }) => {
                         <Label>Stock</Label>
                         <Input
                             type="number"
+                            required
                             name="stock"
                             placeholder="Enter stock"
                             value={formData.stock}
@@ -126,6 +131,7 @@ const ProductForm = ({ open, setOpen, mode, initialData }) => {
                         <Label>Minimum Stock</Label>
                         <Input
                             type="number"
+                            required
                             name="minStock"
                             placeholder="Enter minimum stock"
                             value={formData.minStock}
